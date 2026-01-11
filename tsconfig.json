@@ -1,0 +1,29 @@
+
+{
+  "compilerOptions": {
+    "target": "ES2020", // Transpila para uma versão moderna do JavaScript (ES2021)
+    "module": "commonjs", // Usa o sistema de módulos CommonJS, necessário para Node.js
+    "moduleResolution": "node", // Resolve os imports como o Node faz, buscando em node_modules
+    "useUnknownInCatchVariables": false, // Resultado: a variável do catch volta a ser any (como em versões antigas do TS)
+    "lib": [
+      "ES2020"
+    ], // Permite usar funcionalidades da linguagem baseadas no ES2021
+    "rootDir": "src", // Diretório onde está o código-fonte (entrada)
+    "outDir": "dist", // Diretório onde os arquivos compilados serão salvos (saída)
+    "resolveJsonModule": true, // Permite importar arquivos .json como módulos (útil para config, Firebase etc)
+    "esModuleInterop": true, // Permite usar `import express from 'express'` com libs que usam exportação CommonJS
+    "allowSyntheticDefaultImports": true, // Permite importar de forma "default" mesmo se a lib não exportar assim (mais flexível)
+    "strict": true, // Ativa todas as verificações de tipo do TypeScript (boas práticas)
+    "skipLibCheck": true, // Evita checar tipos de pacotes em node_modules (melhora o desempenho da build)
+    "forceConsistentCasingInFileNames": true, // Garante consistência entre letras maiúsculas e minúsculas nos caminhos dos arquivos
+    "noFallthroughCasesInSwitch": true, // Impede erros ao esquecer de usar `break` nos `case` de `switch`
+    "noImplicitOverride": true // Garante que ao sobrescrever métodos, você use a palavra-chave `override` (mais seguro)
+  },
+  "include": [
+    "src"
+  ], // Apenas os arquivos dentro da pasta `src` serão analisados
+  "exclude": [
+    "node_modules",
+    "dist"
+  ] // Ignora essas pastas durante a compilação
+}

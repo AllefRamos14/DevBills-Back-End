@@ -1,0 +1,50 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+enum TransactionType {
+  expense
+  income
+}
+
+model User {
+  id                    String  @id @map("_id")
+  categoriesInitialized Boolean @default(false)
+}
+
+model Category {
+  id        String          @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  color     String
+  type      TransactionType
+  userId    String
+  createAt  DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+
+  transactions Transaction[]
+
+  @@unique([userId, name, type], name: "userId_name_type")
+}
+
+model Transaction {
+  id          String          @id @default(auto()) @map("_id") @db.ObjectId
+  description String
+  amount      Float
+  date        DateTime
+  type        TransactionType
+  userId      String
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+
+  // 🔗 relacionamento correto MongoDB
+  categoryId String   @db.ObjectId
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  @@index([userId, date])
+  @@index([userId, date, categoryId])
+}
