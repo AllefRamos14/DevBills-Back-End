@@ -1,6 +1,10 @@
-# DevBills – Back-End
+# 💸 DevBills – Back-End
 
-API do **DevBills**, responsável pelo gerenciamento de usuários, autenticação, transações financeiras (receitas e despesas) e categorias.
+API REST do **DevBills**, uma aplicação de controle financeiro pessoal.
+Responsável por autenticação, gerenciamento de usuários, transações
+(receitas e despesas) e categorias.
+
+---
 
 ## 🚀 Tecnologias
 - **Node.js**
@@ -8,19 +12,29 @@ API do **DevBills**, responsável pelo gerenciamento de usuários, autenticaçã
 - **Fastify**
 - **Prisma ORM**
 - **PostgreSQL**
-- **JWT** (autenticação)
-- **Zod** (validação)
+- **JWT**
+- **Zod**
 - **ESLint / Biome**
 
 ---
 
-## 📁 Estrutura do projeto
+## 🧱 Arquitetura
+- Padrão em camadas (Controller → Service → Repository)
+- Autenticação via JWT
+- Validação com Zod
+- ORM com Prisma
+- Commits semânticos
+- GitFlow
+
+---
+
+## 📁 Estrutura
 ```text
 src/
  ├─ modules/
  ├─ routes/
  ├─ controllers/
  ├─ services/
- ├─ prisma/
  ├─ schemas/
+ ├─ prisma/
  └─ server.ts
