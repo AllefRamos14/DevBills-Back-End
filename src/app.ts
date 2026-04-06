@@ -15,7 +15,7 @@ app.decorateRequest("userId", undefined);
 app.register(cors, {
     origin:
         env.NODE_ENV === "production"
-            ? ["https://seu-frontend.vercel.app"]
+            ? ["https://dev-bills-front-end-nu.vercel.app"]
             : ["http://localhost:5173"],
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
