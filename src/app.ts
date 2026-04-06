@@ -4,26 +4,33 @@ import routes from "./routes";
 import { env } from "./config/env";
 import cors from "@fastify/cors";
 
-
 const app: FastifyInstance = Fastify({
     logger: {
-        level: env.NODE_ENV === "dev" ? "info" : "error",
-    }
+        level: env.NODE_ENV === "production" ? "info" : "debug",
+    },
 });
 
-// 🔥 LINHA OBRIGATÓRIA
 app.decorateRequest("userId", undefined);
 
 app.register(cors, {
-    origin: "http://localhost:5173",
-    // origin: "http://localhost:5174",
+    origin:
+        env.NODE_ENV === "production"
+            ? ["https://seu-frontend.vercel.app"]
+            : ["http://localhost:5173"],
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
-})
+});
+
+// rota base
+app.get("/", async () => {
+    return { message: "API DevBills rodando 🚀" };
+});
+
+// health check
+app.get("/health", async () => {
+    return { status: "ok" };
+});
+
 app.register(routes, { prefix: "/api" });
 
-
-export default app
-
-// localStorage:3001/api/categories
-// apidevbills.com.br/api/categories
+export default app;
