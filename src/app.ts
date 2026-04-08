@@ -33,19 +33,17 @@ app.register(cors, {
             return;
         }
 
-        // callback(new Error("Origem não permitida pelo CORS"), false);
         callback(null, false);
     },
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
 });
 
-// rota base
 app.get("/", async () => {
     return { message: "API DevBills rodando 🚀" };
 });
 
-// health check
+
 app.get("/health", async () => {
     return { status: "ok" };
 });

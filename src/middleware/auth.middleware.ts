@@ -7,7 +7,7 @@ declare module "fastify" {
         userId?: string;
     }
 }
-// ✅ cache em memória por usuário
+
 const initializedUsers = new Set<string>();
 
 
@@ -16,13 +16,15 @@ export const authmiddleware = async (
     reply: FastifyReply
 ): Promise<void> => {
 
-    // ✅ Ignora preflight CORS
+
     if (request.method === "OPTIONS") {
         return;
     }
 
 
+
     const authHeader = request.headers.authorization;
+
 
     if (!authHeader || !authHeader.startsWith("Bearer")) {
         return reply
@@ -31,10 +33,14 @@ export const authmiddleware = async (
 
     }
 
+
     const token = authHeader.replace("Bearer ", "");
+
 
     try {
         const decodedtoken = await admin.auth().verifyIdToken(token);
+
+
         const userId = decodedtoken.uid;
         request.userId = decodedtoken.uid;
 
@@ -43,6 +49,7 @@ export const authmiddleware = async (
             await initializeGlobalCategories(userId);
             initializedUsers.add(userId);
         }
+
 
 
         return;
