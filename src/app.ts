@@ -12,11 +12,30 @@ const app: FastifyInstance = Fastify({
 
 app.decorateRequest("userId", undefined);
 
+// app.register(cors, {
+//     origin:
+//         env.NODE_ENV === "production"
+//             ? ["https://dev-bills-front-end-nu.vercel.app"]
+//             : ["http://localhost:5173"],
+//     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+//     allowedHeaders: ["Content-Type", "Authorization"],
+// });
+
 app.register(cors, {
-    origin:
-        env.NODE_ENV === "production"
-            ? ["https://dev-bills-front-end-nu.vercel.app"]
-            : ["http://localhost:5173"],
+    origin: (origin, callback) => {
+        const allowedOrigins = [
+            "http://localhost:5173",
+            "https://dev-bills-front-end-nu.vercel.app",
+        ];
+
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+            return;
+        }
+
+        // callback(new Error("Origem não permitida pelo CORS"), false);
+        callback(null, false);
+    },
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
 });
